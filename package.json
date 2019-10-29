@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -b && xcopy src\\resource.cfg bin\\ /E /I /H /Y",
+    "mv": "npm run build && xcopy bin\\* ..\\_AltVServer\\resources\\night5-framework\\ /E /I /H /Y",
+    "test": "npm run mv && cd ..\\_AltVServer && altv-server.exe"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/night5-net/framework/issues"
   },
-  "homepage": "https://night5.net/"
+  "homepage": "https://night5.net/",
+  "dependencies": {
+    "@types/node": "^12.11.7",
+    "typescript": "^3.6.4"
+  }
 }
