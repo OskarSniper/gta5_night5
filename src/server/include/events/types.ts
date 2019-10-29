@@ -3,7 +3,7 @@ export enum AltEventType {
     Player_Disconnect = "playerDisconnect"
 }
 
-export enum EventType {
-    Player_Connect = "Framework::Player::Connect",
-    Player_Disconnect = "Framework::Player::Disconnect"
+export enum PlayerEvent {
+    Connect = "Framework::Player::Connect",
+    Disconnect = "Framework::Player::Disconnect"
 }
