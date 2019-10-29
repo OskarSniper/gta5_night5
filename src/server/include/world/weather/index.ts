@@ -28,11 +28,11 @@ export class Weather {
 
     /**
      * Sets the weather in our world.
+     * @param {WeatherType} weatherType
      * @returns {boolean}
      */
-    set(type:WeatherType):boolean {
+    set(type:WeatherType):void {
         // TODO: Set weather & sync!
         this._weather = type;
-        return true;
     }
 }
