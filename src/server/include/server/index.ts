@@ -18,7 +18,7 @@ export class Server {
         this.Event = new Event();
         this.World = new World();
 
-        this.Players = new Map();
+        this.Players = new Map<string, FWPlayer>();
 
         // TODO: Fire event on player connect
         on(AltEventType.Player_Connect, (player:Player) => {
