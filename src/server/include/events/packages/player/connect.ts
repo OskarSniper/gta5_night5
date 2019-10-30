@@ -2,9 +2,7 @@ import { Player } from "alt";
 import { Package } from "../package";
 
 export class Connect extends Package {
-    Index: number;
-    constructor(player:Player, index:number) {
+    constructor(player:Player) {
         super(player);
-        this.Index = index;
     }
 }
