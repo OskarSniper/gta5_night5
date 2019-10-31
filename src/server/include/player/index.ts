@@ -1,5 +1,5 @@
 import { Player } from "alt";
-import { Weapon } from "./character/weapons/weapon";
+import { Weapon } from "./character/weapon";
 import { Gameserver } from "../../index";
 
 export class FWPlayer {
@@ -33,9 +33,5 @@ export class FWPlayer {
 
     emit(ev:string, ...data:any):void {
         Gameserver.Network.emit(this._player, ev, data);
-    }
-
-    on(ev:string):void {
-        
     }
 }
