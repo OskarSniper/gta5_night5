@@ -1,5 +1,0 @@
-export class Sync {
-    constructor() {
-
-    }
-}

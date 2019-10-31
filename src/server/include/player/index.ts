@@ -1,10 +1,9 @@
 import { Player } from "alt";
 import { Weapon } from "./character/weapons/weapon";
-import { Sync } from "../sync";
+import { Gameserver } from "../../index";
 
 export class FWPlayer {
     _player: Player;
-    CustomSync: Sync;
     IpAddress: string;
     Weapons: Map<number, Weapon>;
     private _kv: Map<string, any>;
@@ -13,7 +12,6 @@ export class FWPlayer {
         this._player = player;
         this.IpAddress = this._player.ip;
         this.Weapons = new Map<number, Weapon>();
-        this.CustomSync = new Sync();
         this._kv = new Map<string, any>();
     }
 
@@ -31,5 +29,13 @@ export class FWPlayer {
 
     has(key:string):boolean {
         return this._kv.has(key);
+    }
+
+    emit(ev:string, ...data:any):void {
+        Gameserver.Network.emit(this._player, ev, data);
+    }
+
+    on(ev:string):void {
+        
     }
 }
