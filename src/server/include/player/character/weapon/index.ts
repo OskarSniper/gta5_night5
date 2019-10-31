@@ -1,11 +1,11 @@
 import { Meele, Handguns } from "./type";
-import { WeaponComponent } from "./weaponComponent";
+import { Component } from "./component";
 
 export class Weapon {
     private _id: number; // TODO: set internal weapon number, so cheat is not possible!
     private _weapon: Meele | Handguns;
     private _ammo: number;
-    private _components: Set<WeaponComponent>;
+    private _components: Set<Component>;
 
     constructor(weapon:Meele | Handguns, ammo:number) {
         this._id = -1; // TODO: generate random weapon id for anti cheat :)
@@ -13,7 +13,7 @@ export class Weapon {
         this._ammo = ammo; // TODO: Client send shoot event to calc new server-side ammo.
         this._components = new Set();
 
-        this.addComponent(new WeaponComponent("Base Model", 0xF3462F33, "COMPONENT_KNUCKLE_VARMOD_BASE"));
+        this.addComponent(new Component("Base Model", 0xF3462F33, "COMPONENT_KNUCKLE_VARMOD_BASE"));
     }
 
     setAmmo(amount:number):void {
@@ -22,7 +22,11 @@ export class Weapon {
         // TODO: Fire update event!
     }
 
-    addComponent(weaponComp:WeaponComponent):boolean {
+    getAmmo():number {
+        return this._ammo;
+    }
+
+    addComponent(weaponComp:Component):boolean {
         if(!this._components.has(weaponComp)) {
             return false;
         } else {
@@ -32,7 +36,7 @@ export class Weapon {
         }
     }
 
-    removeComponent(weaponComp:WeaponComponent):boolean {
+    removeComponent(weaponComp:Component):boolean {
         if(this._components.has(weaponComp)) {
             // TODO: Send client update!
             this._components.delete(weaponComp);

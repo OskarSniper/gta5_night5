@@ -1,4 +1,4 @@
-export class WeaponComponent {
+export class Component {
     Name: string;
     Hash: number;
     HashKey: string;
