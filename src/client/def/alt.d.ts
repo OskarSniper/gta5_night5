@@ -99,7 +99,7 @@ declare namespace hashes {
   }
 }
 
-declare module "alt-client" {
+declare module "alt" {
   export class Vector3 {
     x: Number;
     y: Number;
