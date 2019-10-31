@@ -33,6 +33,14 @@ export class Protocol {
         this._countEvents = 0;
     }
 
+    Events():Map<string, string> {
+        return this._scappedEvents;
+    }
+
+    Packages():Map<string, any> {
+        return this._eventToPackage;
+    }
+
     /**
      * Registers a new network package to the whole system. This is used to detect & maybe
      * optimize bottlenecks in further network related stuff.
@@ -55,7 +63,7 @@ export class Protocol {
     }
 
     /**
-     * Used for removing network packages, maybe save some RAM, but shouldnt be used
+     * Used for removing network packages, maybe save some RAM, but not recommended
      * that often.
      * @param {string} origin
      * @returns {boolean}
