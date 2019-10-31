@@ -4,9 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -b && xcopy src\\resource.cfg bin\\ /E /I /H /Y",
-    "mv": "npm run build && xcopy bin\\* ..\\_AltVServer\\resources\\night5-framework\\ /E /I /H /Y",
-    "test": "npm run mv && cd ..\\_AltVServer && altv-server.exe"
+    "clean:bin": "rimraf bin/*",
+    "clean:alt": "rimraf ..\\_AltVServer\\resources\\night5-framework\\",
+    "build:client": "cd src/client && tsc -b",
+    "build:server": "cd src/server && tsc -b",
+    "finalize": "xcopy src\\resource.cfg bin\\ /E /I /H /Y && xcopy bin\\* ..\\_AltVServer\\resources\\night5-framework\\ /E /I /H /Y",
+    "mv": "npm run clean:bin && npm run clean:alt && npm run build:server && npm run build:client && npm run finalize",
+    "copy": "xcopy bin\\* ..\\_AltVServer\\resources\\night5-framework\\ /E /I /H /Y",
+    "test": "npm run mv && npm run copy && cd ..\\_AltVServer && altv-server.exe"
   },
   "repository": {
     "type": "git",
@@ -21,6 +26,7 @@
   "homepage": "https://night5.net/",
   "dependencies": {
     "@types/node": "^12.11.7",
+    "rimraf": "^3.0.0",
     "typescript": "^3.6.4"
   }
 }
