@@ -39,6 +39,8 @@ export class Server {
                 return;
             }
 
+            // TODO: Implement Anti-DoS or Anti-FastConnect! Queue maybe?
+
             this.Players.set(player.id, p);
             this.Utils.SocialClubToId.set(player.socialId, player.id);
 
@@ -49,7 +51,7 @@ export class Server {
             player.removeAllWeapons();
 
             this.Network.Event.emit(PlayerEvent.Connect, new Connect(player));
-            this.Network.emit(player, "Framework::Sync", JSON.stringify(Array.from(this.Network.Protocol.Events())));
+            this.Network.emit(player, "Framework::SyncTree", JSON.stringify(Array.from(this.Network.Protocol.Events())));
         });
 
         on(AltEventType.Player_Disconnect, (player:Player, reason:string) => {

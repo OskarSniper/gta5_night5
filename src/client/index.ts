@@ -1,17 +1,18 @@
 import alt, { gameControlsEnabled } from "alt";
 import game from "natives";
 
+import { Client } from "./include/client/index";
+let c:Client = new Client();
+export {
+    c
+};
+
 /*
 alt.setInterval(() => {
     alt.log("Sending test event!");
     alt.emitServer("5", [JSON.stringify([{"test": "test"}, true])] );
 }, 1000);
 */
-
-alt.onServer("Framework::Sync", (syncTree:JSON) => {
-    // TODO: read sync tree & parse to internal array. so we can share client & server-side packages via packages.d.ts files!
-    alt.log(syncTree);
-});
 
 alt.emitServer("3", [JSON.stringify([{"test": "test"}, true])] );
 alt.emitServer("3", [JSON.stringify([{"test": "test"}, true])] );
