@@ -25,11 +25,12 @@
   },
   "homepage": "https://night5.net/",
   "dependencies": {
-    "@types/node": "^12.11.7",
+    "memfs": "^2.16.1",
     "rimraf": "^3.0.0",
     "typescript": "^3.6.4"
   },
   "devDependencies": {
+    "@types/node": "^12.12.3",
     "tsc-watch": "^4.0.0"
   }
 }
