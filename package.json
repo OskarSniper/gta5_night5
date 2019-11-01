@@ -11,7 +11,9 @@
     "finalize": "xcopy src\\resource.cfg bin\\ /E /I /H /Y && xcopy bin\\* ..\\_AltVServer\\resources\\night5-framework\\ /E /I /H /Y",
     "mv": "npm run clean:bin && npm run clean:alt && npm run build:server && npm run build:client && npm run finalize",
     "copy": "xcopy bin\\* ..\\_AltVServer\\resources\\night5-framework\\ /E /I /H /Y",
-    "test": "npm run mv && npm run copy && cd ..\\_AltVServer && altv-server.exe"
+    "test": "npm run mv && npm run copy && cd ..\\_AltVServer && altv-server.exe",
+    "watch:cs": "concurrently --kill-others \"cd src/client && tsc -w\" \"cd src/server && tsc -w\"",
+    "watch:rms": "npm run clean:alt && npm run finalize && cd ..\\_AltVServer && altv-server.exe"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.3",
+    "concurrently": "^5.0.0",
     "tsc-watch": "^4.0.0"
   }
 }
