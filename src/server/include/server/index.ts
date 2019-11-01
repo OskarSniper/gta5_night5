@@ -45,6 +45,9 @@ export class Server {
             // sync weather
             player.setWeather(this.World.Weather.get());
 
+            // clear weapons
+            player.removeAllWeapons();
+
             this.Network.Event.emit(PlayerEvent.Connect, new Connect(player));
             this.Network.emit(player, "Framework::Sync", JSON.stringify(Array.from(this.Network.Protocol.Events())));
         });
