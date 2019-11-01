@@ -15,8 +15,8 @@ export class Death extends PlayerPackage {
         if(Gameserver.Players.has(killer.id)) {
             this.Killer = Gameserver.Players.get(killer.id) as FWPlayer;
 
-            // TODO: Check if weapon is a weapon!
-            if(!this.Killer.Weapons.hasByHash(weapon)) {
+            // Anti-cheat implementation with weapon validation!
+            if(!this.Killer.Weapons.hasByHash(weapon) && (Gameserver.Utils.ValidWeapons.indexOf(weapon) > -1)) {
                 // TODO: Implement Anti-Cheat
                 console.log("!ANTI-CHEAT! Player shouldnt have this weapon!");
             }

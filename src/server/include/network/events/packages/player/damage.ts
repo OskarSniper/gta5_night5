@@ -16,8 +16,8 @@ export class Damage extends PlayerPackage {
         if(Gameserver.Players.has(attacker.id)) {
             this.Attacker = Gameserver.Players.get(attacker.id) as FWPlayer;
 
-            // TODO: Check if weapon is a weapon!
-            if(!this.Attacker.Weapons.hasByHash(weapon)) {
+            // Anti-cheat implementation with weapon validation!
+            if(!this.Attacker.Weapons.hasByHash(weapon) && (Gameserver.Utils.ValidWeapons.indexOf(weapon) > -1)) {
                 // TODO: Implement Anti-Cheat
                 console.log("!ANTI-CHEAT! Player shouldnt have this weapon!");
             }
