@@ -1,7 +1,7 @@
 import { Player } from "alt";
-import { Package } from "./base";
+import { PlayerPackage } from "./playerPackage";
 
-export class Connect extends Package {
+export class Connect extends PlayerPackage {
     constructor(p:Player) {
         super(p);
     }

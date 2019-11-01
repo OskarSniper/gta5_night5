@@ -1,10 +1,10 @@
-import { Package } from "./base";
+import { PlayerPackage } from "./playerPackage";
 import { Entity, Player } from "alt";
 import { FWPlayer } from "../../../../player";
 import { Gameserver } from "../../../../..";
 import { Weapon } from "../../../../player/character/weapon";
 
-export class Damage extends Package {
+export class Damage extends PlayerPackage {
     Attacker: FWPlayer|Entity;
     Damage: number;
     Weapon: Weapon|number;

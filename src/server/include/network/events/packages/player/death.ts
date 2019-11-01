@@ -1,11 +1,11 @@
-import { Package } from "./base";
+import { PlayerPackage } from "./playerPackage";
 import { Entity, Player } from "alt";
 import { Weapon } from "../../../../player/character/weapon";
 import { Gameserver } from "../../../../../index";
 import { FWPlayer } from "../../../../player";
 import { GameWeapons } from "../../../../player/character/weapon/type";
 
-export class Death extends Package {
+export class Death extends PlayerPackage {
     Killer: FWPlayer|Entity;
     Weapon: Weapon|number;
     constructor(p:Player, killer:Entity, weapon:number) {

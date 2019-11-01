@@ -1,5 +1,5 @@
-import { Player, on, Entity, onClient } from "alt";
-import { AltEventType, PlayerEvent } from "../network/events/types";
+import { Player, on, Entity, onClient, Vehicle } from "alt";
+import { AltEventType, PlayerEvent, VehicleEvent, ExtendedAltEvent } from "../network/events/types";
 import { World } from "../world";
 import { FWPlayer } from "../player";
 import { Network } from "../network";
@@ -7,6 +7,7 @@ import { Utils } from "../utils";
 import { FWVehicle } from "../vehicle";
 
 import { Damage, Death, Disconnect, Connect } from "../network/events/packages/player/index";
+import { Create } from "../network/events/packages/vehicle";
 
 export class Server {
     /**
@@ -66,6 +67,20 @@ export class Server {
 
         on(AltEventType.Player_Damage, (player:Player, attacker:Entity, damage:number, weapon:number) => {
             this.Network.Event.emit(PlayerEvent.Damage, new Damage(player, attacker, damage, weapon));
+        });
+
+        /**
+         * Vehicle events
+         */
+        on(ExtendedAltEvent.Vehicle_Create, (veh:Vehicle, fw:FWVehicle) => {
+            console.log("New car spawned!");
+            if(this.Vehicles.has(veh.id)) {
+                console.log("Vehicle duplicate?!");
+                return;
+            }
+
+            this.Vehicles.set(veh.id, fw);
+            this.Network.Event.emit(VehicleEvent.Create, new Create(veh));
         });
 
         // TODO: Move to dev package?

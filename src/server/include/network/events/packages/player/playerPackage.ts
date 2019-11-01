@@ -2,7 +2,7 @@ import { Player } from "alt";
 import { FWPlayer } from "../../../../player";
 import { Gameserver } from "../../../../..";
 
-export class Package {
+export class PlayerPackage {
     Player: FWPlayer|Player;
     constructor(player:Player) {
         if(Gameserver.Players.has(player.id)) {

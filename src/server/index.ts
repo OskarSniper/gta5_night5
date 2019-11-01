@@ -2,11 +2,12 @@ import { Server } from "./include/server";
 import { PlayerEvent } from "./include/network/events/types";
 import { Connect } from "./include/network/events/packages/player/connect";
 import alt, { Player, Entity, Vehicle } from "alt";
-import { Package } from "./include/network/events/packages/player/base";
+import { PlayerPackage } from "./include/network/events/packages/player/playerPackage";
 import { Death } from "./include/network/events/packages/player/death";
 import { Weapon } from "./include/player/character/weapon";
 import { FWPlayer } from "./include/player";
 import { GameWeapons } from "./include/player/character/weapon/type";
+import { FWVehicle } from "./include/vehicle";
 const Gameserver:Server = new Server();
 export {
     Gameserver
@@ -25,7 +26,7 @@ Gameserver.Network.on(PlayerEvent.Connect, (x:Connect) => {
     }
 });
 
-class Testpackage extends Package {
+class Testpackage extends PlayerPackage {
     Objekt: Object;
     Richtig: boolean;
     constructor(player:Player, obj:Object, bool:boolean) {
@@ -58,8 +59,15 @@ Gameserver.Network.on("consoleCommand", (player:Player, data:string) => {
     let p:any = JSON.parse(data);
     switch(p[0]) {
         case "veh":
-            let veh:alt.Vehicle = new alt.Vehicle(p[1], player.pos.x + 5, player.pos.y, player.pos.z, 0, 0, 0);
-            veh.numberPlateText = "Test";
+            switch(p[1]) {
+                case "count":
+                    console.log(`Currently '${Gameserver.Vehicles.size}' cars!`);
+                break;
+                case "spawn":
+                    let v:FWVehicle = new FWVehicle(new alt.Vehicle(p[2], player.pos.x + 5, player.pos.y, player.pos.z, 0, 0, 0));
+                    v.getNativeVehicle().numberPlateText = "BOSS";
+                break;
+            }
         break;
     }
 });
