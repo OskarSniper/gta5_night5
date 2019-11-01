@@ -32,12 +32,14 @@ export class Server {
          * Events are from ALTV to framework interna.
          */
         on(AltEventType.Player_Connect, (player:Player) => {
-            console.log("Player connected!");
-            let p:FWPlayer = new FWPlayer(player);
             if(this.Players.has(player.id) && this.Utils.SocialClubToId.has(player.socialId)) {
                 console.log("Error: User duplicate?!");
                 return;
             }
+
+            console.log(`'${player.socialId}' connected!`);
+
+            let p:FWPlayer = new FWPlayer(player);
 
             // TODO: Implement Anti-DoS or Anti-FastConnect! Queue maybe?
 
@@ -57,10 +59,13 @@ export class Server {
         on(AltEventType.Player_Disconnect, (player:Player, reason:string) => {
             console.log("Player disconnected!");
             if(this.Players.has(player.id)) {
+                // Calling event then deleting... bug fixed :)
+                this.Network.Event.emit(PlayerEvent.Disconnect, new Disconnect(player, reason));
+
+                console.log(`Player '${player.socialId}' disconnected!`);
+
                 this.Players.delete(player.id);
                 this.Utils.SocialClubToId.delete(player.socialId);
-
-                this.Network.Event.emit(PlayerEvent.Disconnect, new Disconnect(player, reason));
             } else {
                 console.log("Error: Skip user disconnect!");
             }

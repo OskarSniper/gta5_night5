@@ -34,6 +34,7 @@ export class Network {
     }
 
     on(ev:string, cb:any):void {
+        /* Old code
         if(this.Protocol.Events().has(ev)) {
             this.Event.getEventEmitter().on(ev, cb);
         } else {
@@ -41,6 +42,8 @@ export class Network {
             // TODO: add fallback support?
             alt.onClient(ev, cb);
         }
+        */
+       this.Event.getEventEmitter().on(ev, cb);
     }
 
     /*

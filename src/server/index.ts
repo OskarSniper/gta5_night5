@@ -20,8 +20,9 @@ export {
 
 Gameserver.Network.on(PlayerEvent.Connect, (x:Connect) => {
     if(x.Player instanceof FWPlayer) {
-        console.log("New Player " + x.Player);
+        console.log("New Player => " + x.Player.getNativePlayer().socialId);
         x.Player.getNativePlayer().spawn(0, 0, 0, 0);
+        x.Player.getNativePlayer().model = 0x9C9EFFD8;
         x.Player.Weapons.give(new Weapon(GameWeapons.Handgun.Pistol, 100));
     }
 });
