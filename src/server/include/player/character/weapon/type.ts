@@ -42,30 +42,3 @@ export const GameWeapons:IWeapons = {
         }
     }
 };
-
-/*
-export enum Meele {
-    Antique_Cavalry_Dagger = 2460120199,
-    Baseball_Bat = 2508868239,
-    Broken_Bottle = 4192643659,
-    Crowbar = 2227010557,
-    Fist = 2725352035,
-    Flashlight = 2343591895,
-    Golf_Club = 1141786504,
-    Hammer = 1317494643,
-    Hatchet = 4191993645,
-    Brass_Knuckles = 3638508604,
-    Knife = 2578778090,
-    Machete = 3713923289,
-    Switchblade = 3756226112,
-    Nightstick = 3756226112,
-    Pipe_Wrench = 419712736,
-    Battle_Axe = 3441901897,
-    Pool_Cue = 2484171525,
-    Stone_Hatchet = 940833800
-}
-*/
-
-export enum Handguns {
-    Pistol = 453432689
-}
