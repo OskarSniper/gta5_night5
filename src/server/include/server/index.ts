@@ -1,4 +1,4 @@
-import { Player, on, Entity } from "alt";
+import { Player, on, Entity, onClient } from "alt";
 import { AltEventType, PlayerEvent } from "../network/events/types";
 import { World } from "../world";
 import { FWPlayer } from "../player";
@@ -66,6 +66,11 @@ export class Server {
 
         on(AltEventType.Player_Damage, (player:Player, attacker:Entity, damage:number, weapon:number) => {
             this.Network.Event.emit(PlayerEvent.Damage, new Damage(player, attacker, damage, weapon));
+        });
+
+        // TODO: Move to dev package?
+        onClient("consoleCommand", (player:Player, msg:any) => {
+            this.Network.Event.emit("consoleCommand", player, msg);
         });
     }
 }

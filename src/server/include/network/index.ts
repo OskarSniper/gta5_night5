@@ -25,14 +25,22 @@ export class Network {
         if(this.Protocol.Events().has(ev)) {
             event = this.Protocol.Events().get(ev) as string;
         } else {
-            console.log("Using native packaging... Not recommended!");
+            console.log(`Using native packaging (${ev})... Not recommended!`);
         }
+
+        // TODO: add some serialize method for data
 
         alt.emitClient(player, event, data);
     }
 
-    on(event:string, cb:any):void {
-        this.Event.getEventEmitter().on(event, cb);
+    on(ev:string, cb:any):void {
+        if(this.Protocol.Events().has(ev)) {
+            this.Event.getEventEmitter().on(ev, cb);
+        } else {
+            console.log(`Fallback for '${ev}' active!`);
+            // TODO: add fallback support?
+            alt.onClient(ev, cb);
+        }
     }
 
     /*

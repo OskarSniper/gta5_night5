@@ -1,4 +1,5 @@
 import { EventEmitter } from "events";
+import { Gameserver } from "../../..";
 
 /**
  * Packages will be resolved as event
@@ -16,11 +17,15 @@ export class Event {
         return this._em;
     }
 
+    // TODO: Count sent bytes!
+    // TODO: All internal packages are marked as unoptimized, WIP
     emit(ev:string, ...data:any):void {
-        this._em.emit(ev, ...data);
-    }
-
-    on(ev:string, cb:any):void {
-        this._em.on(ev, cb);
+        if(Gameserver.Network.Protocol.Events().has(ev)) {
+            console.log("New incoming package -> " + ev);
+            this._em.emit(ev, ...data);
+        } else {
+            console.log(`UnOptimized package '${ev}' detected!`);
+            this._em.emit(ev, ...data);
+        }
     }
 }
