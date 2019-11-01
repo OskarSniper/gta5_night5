@@ -1,8 +1,12 @@
 import { Server } from "./include/server";
 import { PlayerEvent } from "./include/network/events/types";
 import { Connect } from "./include/network/events/packages/player/connect";
-import alt, { Player } from "alt";
-import { Package } from "./include/network/events/packages/package";
+import alt, { Player, Entity } from "alt";
+import { Package } from "./include/network/events/packages/player/base";
+import { Death } from "./include/network/events/packages/player/death";
+import { Weapon } from "./include/player/character/weapon";
+import { FWPlayer } from "./include/player";
+import { GameWeapons } from "./include/player/character/weapon/type";
 const Gameserver:Server = new Server();
 export {
     Gameserver
@@ -13,9 +17,11 @@ export {
  * Testarea
  */
 Gameserver.Network.Event.on(PlayerEvent.Connect, (x:Connect) => {
-    console.log("New Player " + x.Player.name);
-    x.Player.spawn(0, 0, 0, 0);
-    x.Player.model = "mp_f_freemode_01";
+    if(x.Player instanceof FWPlayer) {
+        console.log("New Player " + x.Player);
+        x.Player.getNativePlayer().spawn(0, 0, 0, 0);
+        x.Player.Weapons.give(new Weapon(GameWeapons.Handgun.Pistol, 100));
+    }
 });
 
 class Testpackage extends Package {
@@ -38,3 +44,13 @@ for(let i:number = 0; i < 100; ++i) {
         console.log(x.Richtig);
     });
 }
+
+Gameserver.Network.Event.on(PlayerEvent.Death, (x:Death) => {
+    let weapon:Weapon = x.Weapon as Weapon;
+    weapon.setAmmo(weapon.getAmmo() + 100);
+    if(x.Killer instanceof FWPlayer) {
+        x.Killer.getNativePlayer().maxArmour = 100;
+        x.Killer.getNativePlayer().maxHealth = 100;
+        x.Killer.getNativePlayer().rot = -90;
+    }
+});

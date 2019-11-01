@@ -1,4 +1,4 @@
-import { Package } from "../package";
+import { Package } from "./base";
 import { Entity, Player } from "alt";
 import { FWPlayer } from "../../../../player";
 import { Gameserver } from "../../../../..";
@@ -15,12 +15,12 @@ export class Damage extends Package {
         this.Weapon = weapon;
         if(Gameserver.Players.has(attacker.id)) {
             this.Attacker = Gameserver.Players.get(attacker.id) as FWPlayer;
-            if(!this.Attacker.Weapons.has(weapon)) {
+            if(!this.Attacker.Weapons.hasByHash(weapon)) {
                 // TODO: Implement Anti-Cheat
                 console.log("!ANTI-CHEAT! Player shouldnt have this weapon!");
             }
 
-            this.Weapon = this.Attacker.Weapons.get(weapon) as Weapon;
+            this.Weapon = this.Attacker.Weapons.getByHash(weapon) as Weapon;
         }
     }
 }

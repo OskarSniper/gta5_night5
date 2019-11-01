@@ -1,8 +1,9 @@
-import { Package } from "../package";
+import { Package } from "./base";
 import { Entity, Player } from "alt";
 import { Weapon } from "../../../../player/character/weapon";
 import { Gameserver } from "../../../../../index";
 import { FWPlayer } from "../../../../player";
+import { GameWeapons } from "../../../../player/character/weapon/type";
 
 export class Death extends Package {
     Killer: FWPlayer|Entity;
@@ -13,7 +14,7 @@ export class Death extends Package {
         this.Weapon = weapon;
         if(Gameserver.Players.has(killer.id)) {
             this.Killer = Gameserver.Players.get(killer.id) as FWPlayer;
-            if(!this.Killer.Weapons.has(weapon)) {
+            if(!this.Killer.Weapons.hasByHash(weapon)) {
                 // TODO: Implement Anti-Cheat
                 console.log("!ANTI-CHEAT! Player shouldnt have this weapon!");
             }
