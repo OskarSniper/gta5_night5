@@ -1,15 +1,21 @@
-import { Meele, Handguns } from "./type";
+import { IWeapon } from "./type";
 import { Component } from "./component";
 
 export class Weapon {
-    private _id: number; // TODO: set internal weapon number, so cheat is not possible!
-    private _weapon: Meele | Handguns;
+    private _weapon: IWeapon;
     private _ammo: number;
     private _components: Set<Component>;
 
-    constructor(weapon:Meele | Handguns, ammo:number) {
-        this._id = -1; // TODO: generate random weapon id for anti cheat :)
+    Id: number; // TODO: set internal weapon number, so cheat is not possible!
+    Name: string;
+    Hash: number;
+
+    constructor(weapon:IWeapon, ammo:number) {
+        this.Id = -1; // TODO: generate random weapon id for anti cheat :)
         this._weapon = weapon;
+        this.Name = this._weapon.Name;
+        this.Hash = this._weapon.Hash;
+
         this._ammo = ammo; // TODO: Client send shoot event to calc new server-side ammo.
         this._components = new Set();
 
