@@ -3,14 +3,12 @@ import { Weapon } from "./character/weapon";
 import { Gameserver } from "../../index";
 
 export class FWPlayer {
-    _player: Player;
-    IpAddress: string;
-    Weapons: Map<number, Weapon>;
+    private _player: Player;
     private _kv: Map<string, any>;
+    Weapons: Map<number, Weapon>;
 
     constructor(player:Player) {
         this._player = player;
-        this.IpAddress = this._player.ip;
         this.Weapons = new Map<number, Weapon>();
         this._kv = new Map<string, any>();
     }
