@@ -1,5 +1,5 @@
 import { Player } from "alt";
-import { Package } from "../package";
+import { Package } from "./base";
 
 export class Connect extends Package {
     constructor(p:Player) {

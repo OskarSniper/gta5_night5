@@ -1,4 +1,4 @@
-import { Package } from "../package";
+import { Package } from "./base";
 import { Player } from "alt";
 
 export class Disconnect extends Package {
