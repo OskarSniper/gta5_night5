@@ -1,7 +1,7 @@
 import { Server } from "./include/server";
 import { PlayerEvent } from "./include/network/events/types";
 import { Connect } from "./include/network/events/packages/player/connect";
-import alt, { Player, Entity } from "alt";
+import alt, { Player, Entity, Vehicle } from "alt";
 import { Package } from "./include/network/events/packages/player/base";
 import { Death } from "./include/network/events/packages/player/death";
 import { Weapon } from "./include/player/character/weapon";
@@ -16,7 +16,8 @@ export {
 /**
  * Testarea
  */
-Gameserver.Network.Event.on(PlayerEvent.Connect, (x:Connect) => {
+
+Gameserver.Network.on(PlayerEvent.Connect, (x:Connect) => {
     if(x.Player instanceof FWPlayer) {
         console.log("New Player " + x.Player);
         x.Player.getNativePlayer().spawn(0, 0, 0, 0);
@@ -36,21 +37,29 @@ class Testpackage extends Package {
 
 Gameserver.Network.Protocol.registerPackage("Framework::Game::Test", Object(Testpackage));
 
-for(let i:number = 0; i < 100; ++i) {
+for(let i:number = 0; i < 5; ++i) {
     Gameserver.Network.Protocol.registerPackage("Framework::Game::Test" + i, Object(Testpackage));
-    Gameserver.Network.Event.on("Framework::Game::Test" + i, (x:Testpackage) => {
-        console.log(x.Objekt);
-        console.log(x.Player);
-        console.log(x.Richtig);
+    Gameserver.Network.on("Framework::Game::Test" + i, (x:Testpackage) => {
+        console.log("Testpackage called!" + i);
     });
 }
 
-Gameserver.Network.Event.on(PlayerEvent.Death, (x:Death) => {
+Gameserver.Network.on(PlayerEvent.Death, (x:Death) => {
     let weapon:Weapon = x.Weapon as Weapon;
     weapon.setAmmo(weapon.getAmmo() + 100);
     if(x.Killer instanceof FWPlayer) {
         x.Killer.getNativePlayer().maxArmour = 100;
         x.Killer.getNativePlayer().maxHealth = 100;
         x.Killer.getNativePlayer().rot = -90;
+    }
+});
+
+Gameserver.Network.on("consoleCommand", (player:Player, data:string) => {
+    let p:any = JSON.parse(data);
+    switch(p[0]) {
+        case "veh":
+            let veh:alt.Vehicle = new alt.Vehicle(p[1], player.pos.x + 5, player.pos.y, player.pos.z, 0, 0, 0);
+            veh.numberPlateText = "Test";
+        break;
     }
 });
