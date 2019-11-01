@@ -1,36 +1,45 @@
 import { Player } from "alt";
-import { Weapon } from "./character/weapon";
 import { Gameserver } from "../../index";
 import { Weapons } from "./character/weapons";
 
 export class FWPlayer {
     private _player: Player;
-    private _kv: Map<string, any>;
+    private _kv: Map<IMetaKey, any>;
     Weapons: Weapons;
 
     constructor(player:Player) {
         this._player = player;
         this.Weapons = new Weapons(this._player);
-        this._kv = new Map<string, any>();
+        this._kv = new Map<IMetaKey, any>();
     }
 
     getNativePlayer():Player {
         return this._player;
     }
 
-    set(key:string, value:any):void {
+    set(key:IMetaKey, value:any):void {
+        // TODO: Rewrite meta sync!
+        if(key.Synced) {
+            this.emit("Framework::Player::Meta::Set", { "key": key.Key, "value": value.Value });
+        }
+
         this._kv.set(key, value);
     }
 
-    get(key:string):any {
+    get(key:IMetaKey):any {
         return this.get(key);
     }
 
-    has(key:string):boolean {
+    has(key:IMetaKey):boolean {
         return this._kv.has(key);
     }
 
     emit(ev:string, ...data:any):void {
-        Gameserver.Network.emit(this._player, ev, data);
+        Gameserver.Network.emit(this._player, ev, JSON.stringify(data));
     }
+}
+
+export interface IMetaKey {
+    Key: string;
+    Synced?: boolean;
 }
