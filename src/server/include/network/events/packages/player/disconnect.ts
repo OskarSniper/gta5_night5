@@ -3,8 +3,8 @@ import { Player } from "alt";
 
 export class Disconnect extends Package {
     Reason: string;
-    constructor(player:Player, reason:string) {
-        super(player);
+    constructor(p:Player, reason:string) {
+        super(p);
         this.Reason = reason;
     }
 }

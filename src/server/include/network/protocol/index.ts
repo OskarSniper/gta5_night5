@@ -1,3 +1,6 @@
+import alt, { Player } from "alt";
+import { Gameserver } from "../../../index";
+
 /**
  * Protocol class for a smoother networking & fix all related
  * network issues. Built for high performance networks & clustering.
@@ -41,6 +44,10 @@ export class Protocol {
         return this._eventToPackage;
     }
 
+    _computePackage(pack:any, ...data:any):any {
+        return new pack(...data);
+    }
+
     /**
      * Registers a new network package to the whole system. This is used to detect & maybe
      * optimize bottlenecks in further network related stuff.
@@ -48,17 +55,23 @@ export class Protocol {
      * @param {any} pack
      * @returns {boolean}
      */
-    registerPackage(origin:string, pack:any):boolean {
+    registerPackage(origin:string, pack:any):string|undefined {
         if(!this._scappedEvents.has(origin)) {
             this._countEvents = this._countEvents + 1;
             let id:string = this._computeNewNetworkId(this._countEvents);
             this._scappedEvents.set(origin, id);
             this._eventToPackage.set(id, pack);
-            console.log(`${origin} successfully registered!`);
-            return true;
+
+            alt.onClient(id, (player:Player, data:any) => {
+                let rcv_data:any = JSON.parse(data);
+                Gameserver.Network.Event.emit(origin, new pack(player, ...rcv_data));
+            });
+
+            console.log(`Linked ${origin} => ${id}!`);
+            return id;
         } else {
             console.log(`Conflict! ${origin} is already registered!`);
-            return false;
+            return undefined;
         }
     }
 
