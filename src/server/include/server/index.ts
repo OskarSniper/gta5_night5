@@ -41,6 +41,9 @@ export class Server {
             this.Players.set(player.id, p);
             this.Utils.SocialClubToId.set(player.socialId, player.id);
 
+            // sync weather
+            player.setWeather(this.World.Weather.get());
+
             this.Network.Event.emit(PlayerEvent.Connect, new Connect(player));
             this.Network.emit(player, "Framework::Sync", JSON.stringify(Array.from(this.Network.Protocol.Events())));
         });
