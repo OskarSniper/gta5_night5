@@ -1,0 +1,3 @@
+[submodule "src/3rd/altv_definitions"]
+	path = src/3rd/altv_definitions
+	url = git@github.com:night5-net/altv_definitions.git
