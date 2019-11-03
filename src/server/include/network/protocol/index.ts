@@ -57,14 +57,14 @@ export class Protocol {
      */
     registerPackage(origin:string, pack:any):string|undefined {
         if(!this._scappedEvents.has(origin)) {
-            this._countEvents = this._countEvents + 1;
+            ++this._countEvents;
             let id:string = this._computeNewNetworkId(this._countEvents);
             this._scappedEvents.set(origin, id);
             this._eventToPackage.set(id, pack);
 
             alt.onClient(id, (player:Player, data:any) => {
                 let rcv_data:any = JSON.parse(data);
-                Gameserver.Network.Event.emit(origin, new pack(player, ...rcv_data));
+                Gameserver.Network.Event.emit(origin, this._computePackage(pack, player, ...rcv_data));
             });
 
             console.log(`Linked ${origin} => ${id}!`);
@@ -83,6 +83,7 @@ export class Protocol {
      */
     unregisterPackage(origin:string):boolean {
         if(this._scappedEvents.has(origin)) {
+            alt.offClient(this._scappedEvents.get(origin) as string, () => {});
             if(this._eventToPackage.has(this._scappedEvents.get(origin) as string)) {
                 this._eventToPackage.delete(this._scappedEvents.get(origin) as string);
             }
