@@ -12,7 +12,7 @@
       "emitDecoratorMetadata": true,
       "preserveConstEnums": true,
 
-      "typeRoots": [ ],
+      "typeRoots": [ "../3rd/altv_definitions" ],
 
       "noImplicitAny": true,
       "sourceMap": false,
