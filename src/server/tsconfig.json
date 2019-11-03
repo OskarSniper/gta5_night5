@@ -56,5 +56,7 @@
     // "experimentalDecorators": true,        /* Enables experimental support for ES7 decorators. */
     // "emitDecoratorMetadata": true,         /* Enables experimental support for emitting type metadata for decorators. */
   },
-  "include": []
+  "include": [
+    "../3rd/altv_definitions/alt-server.d.ts"
+  ]
 }

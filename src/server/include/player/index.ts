@@ -1,15 +1,18 @@
 import { Player } from "alt";
 import { Gameserver } from "../../index";
 import { Weapons } from "./character/weapons";
+import { PlayerWeather } from "./weather";
 
 export class FWPlayer {
     private _player: Player;
     private _kv: Map<IMetaKey, any>;
     Weapons: Weapons;
+    Weather: PlayerWeather;
 
     constructor(player:Player) {
         this._player = player;
         this.Weapons = new Weapons(this._player);
+        this.Weather = new PlayerWeather(this._player.id);
         this._kv = new Map<IMetaKey, any>();
     }
 
