@@ -12,6 +12,8 @@
       "emitDecoratorMetadata": true,
       "preserveConstEnums": true,
 
+      "typeRoots": [ ],
+
       "noImplicitAny": true,
       "sourceMap": false,
       "outDir": "../../bin/client",

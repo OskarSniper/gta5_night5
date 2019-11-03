@@ -1,5 +1,5 @@
 import alt, { gameControlsEnabled } from "alt";
-import * as native from 'natives';
+import * as native from "natives";
 
 export class Client {
     Network: Network;
